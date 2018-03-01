@@ -6,13 +6,13 @@ class Board:
         """Pass in a list of numbers that represent the board.
             The length of the board must be a perfect square.
             Zeroes represent empty spaces."""
-        length = sqrt(len(board))
-        if not length.is_integer():
+        self.length = sqrt(len(board))
+        if not self.length.is_integer():
             raise ValueError('Board length is not a perfect square!')
         self.board = board
-        self.num_columns = self.num_rows = int(length)
+        self.num_columns = self.num_rows = int(self.length)
         all_numbers = range(1, len(board) + 1)
-        self.winning_sum = int(sum(all_numbers) / length)
+        self.winning_sum = int(sum(all_numbers) / self.length)
 
     @property
     def has_winning_sum(self):
@@ -57,3 +57,15 @@ class Board:
             if sum(diagonal) == self.winning_sum:
                 return True
         return False
+
+    @property
+    def all_possible_moves(self):
+        """Returns all indexes that contain the value zero"""
+        return [i for i, val in enumerate(self.board) if val == 0]
+
+    def paint(self):
+        for i, val in enumerate(self.board):
+            print('{} '.format(val), end='')
+            if ((i + 1) % self.num_columns) == 0:
+                print()
+

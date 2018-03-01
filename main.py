@@ -12,8 +12,8 @@ def main():
 
     board = [
         3, 0, 4,
-        1, 5, 9,
-        0, 0, 2
+        1, 0, 9,
+        0, 0, 1
     ]
     # board = [
     #     3, 0, 4, 11,
@@ -24,6 +24,8 @@ def main():
 
     board = Board(board)
     print(board.has_winning_sum)
+    print(board.all_possible_moves)
+    board.paint()
 
     # stub_fn(board)
 
