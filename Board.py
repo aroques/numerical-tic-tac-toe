@@ -2,7 +2,6 @@ from math import sqrt
 
 
 class Board:
-
     def __init__(self, board):
         """Pass in a list of numbers that represent the board.
             The length of the board must be a perfect square.
