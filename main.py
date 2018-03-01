@@ -3,10 +3,6 @@ from Board import Board
 
 
 def main():
-    print("hello world!")
-
-    # 15 is a win
-
     # player_first = int(input('Please enter a 1 or 2 to choose to go first or second:'))
     #
     # if player_first == 1:
@@ -27,8 +23,8 @@ def main():
     # ]
 
     board = Board(board)
+    print(board.has_winning_sum)
 
-    # is_win(board)
     # stub_fn(board)
 
 

@@ -10,11 +10,9 @@ class Board:
         if not length.is_integer():
             raise ValueError('Board length is not a perfect square!')
         self.board = board
-        self.num_columns = length
-        self.num_rows = length
+        self.num_columns = self.num_rows = int(length)
         all_numbers = range(1, len(board) + 1)
         self.winning_sum = int(sum(all_numbers) / length)
-        print(self.winning_sum)
 
     @property
     def has_winning_sum(self):
