@@ -11,32 +11,17 @@ def main():
     #     print('the player is min')
 
     board = [
-        3, 0, 4,
-        1, 0, 9,
-        0, 0, 1
+        0, 0, 0,
+        0, 0, 0,
+        0, 0, 0
     ]
-    # board = [
-    #     3, 0, 4, 11,
-    #     1, 5, 9, 13,
-    #     0, 0, 2, 10,
-    #     0, 0, 2
-    # ]
 
     board = Board(board)
-    print(board.has_winning_sum)
-    print(board.all_possible_moves)
-    print(board)
 
-    # stub_fn(board)
+    while not board.has_winning_sum:
+        max_move = choice(board.all_odd_moves)
 
-
-def stub_fn(board):
-    possible_moves = []
-    for i, num in enumerate(board):
-        if num == 0:
-            possible_moves.append(i)
-    for move in possible_moves:
-        print(move)
+        min_move = choice(board.all_even_moves)
 
 
 if __name__ == '__main__':

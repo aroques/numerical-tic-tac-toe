@@ -1,4 +1,5 @@
 from math import sqrt
+from itertools import product
 
 
 class Board:
@@ -11,8 +12,8 @@ class Board:
             raise ValueError('Board length is not a perfect square!')
         self.board = board
         self.num_columns = self.num_rows = int(self.length)
-        all_numbers = range(1, len(board) + 1)
-        self.winning_sum = int(sum(all_numbers) / self.length)
+        self.all_numbers = range(1, len(board) + 1)
+        self.winning_sum = int(sum(self.all_numbers) / self.length)
 
     def __str__(self):
         out = ''
@@ -24,6 +25,7 @@ class Board:
 
     @property
     def has_winning_sum(self):
+        """Returns True if the values of a row, column or diagonal sum to the winning sum value"""
         winning_sums = [
             self.row_has_winning_sum,
             self.column_has_winning_sum,
@@ -67,7 +69,31 @@ class Board:
         return False
 
     @property
-    def all_possible_moves(self):
+    def all_possible_move_locations(self):
         """Returns all indexes that contain the value zero"""
         return [i for i, val in enumerate(self.board) if val == 0]
+
+    @property
+    def all_possible_move_values(self):
+        """Returns all possible values that can be placed on the board"""
+        used_values = [val for val in self.board if val != 0]
+        return [val for val in self.all_numbers if val not in used_values]
+
+    @property
+    def all_possible_moves(self):
+        """Returns all possible moves. A move is a tuple. The move[0] is the location
+            (index) of the move and move[1] is the value."""
+        return product(self.all_possible_move_locations, self.all_possible_move_values)
+
+    @property
+    def all_odd_moves(self):
+        """Returns all possible odd moves. A move is a tuple. The move[0] is the location
+            (index) of the move and move[1] is the value."""
+        return [move for move in self.all_possible_moves if move[1] % 2 == 1]
+
+    @property
+    def all_even_moves(self):
+        """Returns all possible even moves. A move is a tuple. The move[0] is the location
+            (index) of the move and move[1] is the value."""
+        return [move for move in self.all_possible_moves if move[1] % 2 == 0]
 
