@@ -3,6 +3,6 @@ class Player:
         pass
 
     @staticmethod
-    def perform_move(self, move, board):
-        board[move[0]] = move[1]
+    def perform_move(move, board):
+        board.board[move[0]] = move[1]
         return board
