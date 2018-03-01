@@ -14,6 +14,14 @@ class Board:
         all_numbers = range(1, len(board) + 1)
         self.winning_sum = int(sum(all_numbers) / self.length)
 
+    def __str__(self):
+        out = ''
+        for i, val in enumerate(self.board):
+            out += '{} '.format(val)
+            if ((i + 1) % self.num_columns) == 0:
+                out += '\n'
+        return out
+
     @property
     def has_winning_sum(self):
         winning_sums = [
@@ -62,10 +70,4 @@ class Board:
     def all_possible_moves(self):
         """Returns all indexes that contain the value zero"""
         return [i for i, val in enumerate(self.board) if val == 0]
-
-    def paint(self):
-        for i, val in enumerate(self.board):
-            print('{} '.format(val), end='')
-            if ((i + 1) % self.num_columns) == 0:
-                print()
 

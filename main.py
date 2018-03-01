@@ -25,7 +25,7 @@ def main():
     board = Board(board)
     print(board.has_winning_sum)
     print(board.all_possible_moves)
-    board.paint()
+    print(board)
 
     # stub_fn(board)
 
