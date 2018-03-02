@@ -1,4 +1,3 @@
-from math import sqrt
 from itertools import product
 
 
@@ -12,7 +11,6 @@ class Board:
         self.num_columns = self.num_rows = int(self.length)
         self.all_numbers = range(1, len(self.board) + 1)
         self.winning_sum = int(sum(self.all_numbers) / self.length)
-        print(self.winning_sum)
 
     def __str__(self):
         out = ''
@@ -33,35 +31,49 @@ class Board:
         return any(winning_sums)
 
     @property
-    def row_has_winning_sum(self):
+    def rows(self):
+        rows = []
         for i in range(self.num_columns):
             start_idx = i * self.num_columns
             end_idx = start_idx + self.num_columns
-            row = self.board[start_idx:end_idx]
+            rows.append(self.board[start_idx:end_idx])
+        return rows
+
+    @property
+    def columns(self):
+        columns = []
+        for i in range(self.num_rows):
+            column = self.board[i::self.num_rows]
+            columns.append(column)
+        return columns
+
+    @property
+    def row_has_winning_sum(self):
+        for row in self.rows:
             if sum(row) == self.winning_sum:
                 return True
         return False
 
     @property
     def column_has_winning_sum(self):
-        for i in range(self.num_rows):
-            column = self.board[i::self.num_rows]
+        for column in self.columns:
             if sum(column) == self.winning_sum:
                 return True
         return False
 
     @property
-    def diagonal_has_winning_sum(self):
-        diagonals = []
+    def major_diagonal(self):
+        return self.board[::self.num_columns + 1]
 
-        top_left_to_bottom_right = self.board[::self.num_columns + 1]
-        diagonals.append(top_left_to_bottom_right)
-
-        first_idx_of_last_row = len(self.board) - self.num_columns
+    @property
+    def minor_diagonal(self):
         last_idx_of_first_row = self.num_columns - 1
-        top_right_to_bottom_left = self.board[last_idx_of_first_row:first_idx_of_last_row + 1:self.num_columns - 1]
-        diagonals.append(top_right_to_bottom_left)
+        first_idx_of_last_row = len(self.board) - self.num_columns
+        return self.board[last_idx_of_first_row:first_idx_of_last_row + 1:self.num_columns - 1]
 
+    @property
+    def diagonal_has_winning_sum(self):
+        diagonals = [self.major_diagonal, self.minor_diagonal]
         for diagonal in diagonals:
             if sum(diagonal) == self.winning_sum:
                 return True
