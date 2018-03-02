@@ -3,17 +3,16 @@ from itertools import product
 
 
 class Board:
-    def __init__(self, board):
+    def __init__(self, length=4):
         """Pass in a list of numbers that represent the board.
             The length of the board must be a perfect square.
             Zeroes represent empty spaces."""
-        self.length = sqrt(len(board))
-        if not self.length.is_integer():
-            raise ValueError('Board length is not a perfect square!')
-        self.board = board
+        self.length = length
+        self.board = [0 for _ in range(pow(self.length, 2))]
         self.num_columns = self.num_rows = int(self.length)
-        self.all_numbers = range(1, len(board) + 1)
+        self.all_numbers = range(1, len(self.board) + 1)
         self.winning_sum = int(sum(self.all_numbers) / self.length)
+        print(self.winning_sum)
 
     def __str__(self):
         out = ''

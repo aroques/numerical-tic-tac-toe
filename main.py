@@ -14,24 +14,13 @@ def main():
         ai_player = Player(is_human=0, is_max=1)
 
     players = [human_player, ai_player]
+    max_, min_ = get_max_and_min(players)
 
-    board = [
-        0, 0, 0,
-        0, 0, 0,
-        0, 0, 0
-    ]
-
-    board = Board(board)
+    board = Board(3)
 
     print(board)
 
     while True:
-        for player in players:
-            if player.is_max:
-                max_ = player
-            else:
-                min_ = player
-
         max_move = max_.get_move(board)
         board = max_.perform_move(*max_move, board)
         print(board)
@@ -45,6 +34,15 @@ def main():
         if board.has_winning_sum:
             print('Min wins!')
             break
+
+
+def get_max_and_min(players):
+    for player in players:
+        if player.is_max:
+            max_ = player
+        else:
+            min_ = player
+    return max_, min_
 
 
 if __name__ == '__main__':
