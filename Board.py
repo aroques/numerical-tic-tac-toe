@@ -15,7 +15,7 @@ class Board:
     def __str__(self):
         out = ''
         for i, val in enumerate(self.board):
-            out += '{} '.format(val)
+            out += '{:2} '.format(val)
             if ((i + 1) % self.num_columns) == 0:
                 out += '\n'
         return out
@@ -121,10 +121,18 @@ class Board:
         return [move for move in self.all_possible_moves if move[1] % 2 == 1]
 
     @property
+    def all_odd_move_values(self):
+        return list(set(move[1] for move in self.all_odd_moves))
+
+    @property
     def all_even_moves(self):
         """Returns all possible even moves. A move is a tuple. The move[0] is the location
             (index) of the move and move[1] is the value."""
         return [move for move in self.all_possible_moves if move[1] % 2 == 0]
+
+    @property
+    def all_even_move_values(self):
+        return list(set(move[1] for move in self.all_even_moves))
 
     @property
     def winning_sums(self):

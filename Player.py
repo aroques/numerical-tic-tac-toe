@@ -33,6 +33,7 @@ class Player:
         if self.is_human:
             return self.get_move_from_user(board)
         else:
+            # Call alpha beta cutoff search here
             return choice(self.all_legal_moves(board))
 
     def get_move_from_user(self, board):
