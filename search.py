@@ -14,7 +14,7 @@ def alphabeta_cutoff_search(state, game, d=4, reached_cutoff=None, eval_fn=None)
 
     def max_value(state, alpha, beta, depth):
         if reached_cutoff(state, depth):
-            return eval_fn(state)  # essentially call game.utility(state, player)
+            return eval_fn(state)
         v = -infinity
         for a in game.actions(state):
             v = max(v, min_value(game.result(state, a),
@@ -37,8 +37,9 @@ def alphabeta_cutoff_search(state, game, d=4, reached_cutoff=None, eval_fn=None)
         return v
 
     reached_cutoff = (reached_cutoff or
-                      (lambda state, depth: depth > d or
-                       game.terminal_test(state)))
+                      (lambda state, depth:
+                       depth > d or
+                       game.is_terminal(state)))
     eval_fn = eval_fn or (lambda state: game.utility(state, player))
     best_score = -infinity
     beta = infinity

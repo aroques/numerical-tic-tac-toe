@@ -14,15 +14,15 @@ class Player:
 
     def all_legal_move_locations(self, board):
         if self.is_max:
-            return [move[0] for move in board.all_odd_moves]
+            return set([move[0] for move in board.all_odd_moves])
         else:
-            return [move[0] for move in board.all_even_moves]
+            return set([move[0] for move in board.all_even_moves])
 
     def all_legal_move_values(self, board):
         if self.is_max:
-            return [move[1] for move in board.all_odd_moves]
+            return set([move[1] for move in board.all_odd_moves])
         else:
-            return [move[1] for move in board.all_even_moves]
+            return set([move[1] for move in board.all_even_moves])
 
     @staticmethod
     def perform_move(move_location, move_value, board):
@@ -37,16 +37,14 @@ class Player:
             return choice(self.all_legal_moves(board))
 
     def get_move_from_user(self, board):
-        self.print_all_legal_moves(board)
-
         while True:
-            move_location = int(input('Enter move location: '))
+            move_location = int(input('Enter move location {}: '.format(self.all_legal_move_locations(board))))
             if move_location not in self.all_legal_move_locations(board):
                 print('Not a valid move location')
             else:
                 break
         while True:
-            move_value = int(input('Enter move value: '))
+            move_value = int(input('Enter move value {}: '.format(self.all_legal_move_values(board))))
             if move_value not in self.all_legal_move_values(board):
                 print('Not a valid move value')
             else:

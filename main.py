@@ -23,12 +23,18 @@ def main():
         if board.has_winning_sum:
             print('Max wins!')
             break
+        if len(list(board.all_possible_moves)) == 0:
+            print('Draw!')
+            break
 
         min_move = min_.get_move(board)
         board = min_.perform_move(*min_move, board)
         print(board)
         if board.has_winning_sum:
             print('Min wins!')
+            break
+        if len(list(board.all_possible_moves)) == 0:
+            print('Draw!')
             break
 
 

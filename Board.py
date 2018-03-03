@@ -92,6 +92,7 @@ class Board:
 
     @staticmethod
     def count_even_odd(vector):
+        """Counts the number of even and odd numbers in a vector. Zeroes are not counted."""
         even_cnt = odd_cnt = 0
         for val in vector:
             if val == 0:
@@ -133,6 +134,7 @@ class Board:
 
     @property
     def utility(self):
+        """Returns 1 if there is a winning sum else returns 0"""
         if self.has_winning_sum:
             return 1
         else:
@@ -165,4 +167,3 @@ class Board:
     #         return True
     #     else:
     #         return False
-

@@ -38,7 +38,7 @@ class Game:
             return -state.utiility
 
     @staticmethod
-    def terminal_test(state):
+    def is_terminal(state):
         """Return True if this is a final state for the game."""
         return state.has_winning_sum
 
