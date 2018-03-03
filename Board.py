@@ -1,4 +1,4 @@
-from itertools import product
+from itertools import product, combinations
 
 
 class Board:
@@ -72,12 +72,30 @@ class Board:
         return self.board[last_idx_of_first_row:first_idx_of_last_row + 1:self.num_columns - 1]
 
     @property
+    def diagonals(self):
+        return [self.major_diagonal, self.minor_diagonal]
+
+    @property
     def diagonal_has_winning_sum(self):
-        diagonals = [self.major_diagonal, self.minor_diagonal]
-        for diagonal in diagonals:
+        for diagonal in self.diagonals:
             if sum(diagonal) == self.winning_sum:
                 return True
         return False
+
+    @property
+    def is_maxes_turn(self):
+        even = odd = 0
+        for val in self.board:
+            if val % 2 == 0:
+                even += 1
+            else:
+                odd += 1
+        if even == odd:
+            return True
+        elif odd == 0:
+            return True
+        else:
+            return False
 
     @property
     def all_possible_move_locations(self):
@@ -108,3 +126,32 @@ class Board:
             (index) of the move and move[1] is the value."""
         return [move for move in self.all_possible_moves if move[1] % 2 == 0]
 
+    @property
+    def winning_sums(self):
+        return [v for v in combinations(self.all_numbers, self.length) if sum(v) == self.winning_sum]
+
+    @property
+    def two_even_two_odd_winning_sums(self):
+        return [v for v in self.winning_sums if equal_even_odd(v)]
+
+    @property
+    def all_even_all_odd_winning_sums(self):
+        return [v for v in self.winning_sums if v not in self.two_even_two_odd_winning_sums]
+
+
+def equal_even_odd(vector):
+    even, odd = count_even_odd(vector)
+    if even == odd:
+        return True
+    else:
+        return False
+
+
+def count_even_odd(vector):
+    even_cnt = odd_cnt = 0
+    for val in vector:
+        if val % 2 == 0:
+            even_cnt += 1
+        else:
+            odd_cnt += 1
+    return even_cnt, odd_cnt

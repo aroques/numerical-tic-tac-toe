@@ -1,6 +1,6 @@
 from Board import Board
-from Player import Player
-from itertools import combinations
+# from Player import Player
+# from itertools import combinations
 
 
 def main():
@@ -18,17 +18,12 @@ def main():
 
     board = Board(4)
 
-    print(board)
-
-    winning_sums = []
-    for i in combinations(board.all_numbers, 4):
-        if sum(i) == board.winning_sum:
-            winning_sums.append(i)
-
-    print('length of winning sums = {}'.format(len(winning_sums)))
+    print(len(board.winning_sums))
+    print(len(board.two_even_two_odd_winning_sums))
+    print(len(board.all_even_all_odd_winning_sums))
 
     twoandtwo = []
-    for sum_ in winning_sums:
+    for sum_ in board.winning_sums:
         even_count = odd_count = 0
         for num in sum_:
             if num % 2 == 0:
@@ -38,10 +33,13 @@ def main():
         if even_count == 2 and odd_count == 2:
             twoandtwo.append(sum_)
         else:
-            print(sum_)
+            pass
+            #print(sum_)
 
     print('length of 2 and 2 = {}'.format(len(twoandtwo)))
 
+
+    minimax(board)
 
     # while True:
     #     max_move = max_.get_move(board)
@@ -84,9 +82,15 @@ def dfs_iterative(graph, start):
 
 def minimax(board):
     """Returns the utility values for max"""
-    score = 0
+    vectors = board.diagonals + board.columns + board.rows
 
-    diagonals = [board.major_diagonal, board.minor_diagonal]
+    if board.is_maxes_turn:
+        for vector in vectors:
+            print(vector)
+
+    else:
+        pass
+
 
     # Defensive moves Rank: 4
     # IF 3 evens on major or minor diagonal or actually anywhere
@@ -106,6 +110,14 @@ def minimax(board):
 
     # IF 1 even Rank: 3
     # Then put an odd that could win
+
+
+def equal_even_odd(vector):
+    even, odd = count_even_odd(vector)
+    if even == odd:
+        return True
+    else:
+        return False
 
 
 def count_even_odd(vector):
