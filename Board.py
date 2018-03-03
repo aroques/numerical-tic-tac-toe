@@ -84,18 +84,23 @@ class Board:
 
     @property
     def is_maxes_turn(self):
-        even = odd = 0
-        for val in self.board:
-            if val % 2 == 0:
-                even += 1
-            else:
-                odd += 1
+        even, odd = self.count_even_odd(self.board)
         if even == odd:
-            return True
-        elif odd == 0:
             return True
         else:
             return False
+
+    @staticmethod
+    def count_even_odd(vector):
+        even_cnt = odd_cnt = 0
+        for val in vector:
+            if val == 0:
+                continue
+            if val % 2 == 0:
+                even_cnt += 1
+            else:
+                odd_cnt += 1
+        return even_cnt, odd_cnt
 
     @property
     def all_possible_move_locations(self):
@@ -121,45 +126,43 @@ class Board:
         return [move for move in self.all_possible_moves if move[1] % 2 == 1]
 
     @property
-    def all_odd_move_values(self):
-        return list(set(move[1] for move in self.all_odd_moves))
-
-    @property
     def all_even_moves(self):
         """Returns all possible even moves. A move is a tuple. The move[0] is the location
             (index) of the move and move[1] is the value."""
         return [move for move in self.all_possible_moves if move[1] % 2 == 0]
 
     @property
-    def all_even_move_values(self):
-        return list(set(move[1] for move in self.all_even_moves))
-
-    @property
-    def winning_sums(self):
-        return [v for v in combinations(self.all_numbers, self.length) if sum(v) == self.winning_sum]
-
-    @property
-    def two_even_two_odd_winning_sums(self):
-        return [v for v in self.winning_sums if equal_even_odd(v)]
-
-    @property
-    def all_even_all_odd_winning_sums(self):
-        return [v for v in self.winning_sums if v not in self.two_even_two_odd_winning_sums]
-
-
-def equal_even_odd(vector):
-    even, odd = count_even_odd(vector)
-    if even == odd:
-        return True
-    else:
-        return False
-
-
-def count_even_odd(vector):
-    even_cnt = odd_cnt = 0
-    for val in vector:
-        if val % 2 == 0:
-            even_cnt += 1
+    def utility(self):
+        if self.has_winning_sum:
+            return 1
         else:
-            odd_cnt += 1
-    return even_cnt, odd_cnt
+            return 0
+
+    # @property
+    # def all_odd_move_values(self):
+    #     return list(set(move[1] for move in self.all_odd_moves))
+    #
+    # @property
+    # def all_even_move_values(self):
+    #     return list(set(move[1] for move in self.all_even_moves))
+    #
+    # @property
+    # def winning_sums(self):
+    #     return [v for v in combinations(self.all_numbers, self.length) if sum(v) == self.winning_sum]
+    #
+    # @property
+    # def two_even_two_odd_winning_sums(self):
+    #     return [v for v in self.winning_sums if equal_even_odd(v)]
+    #
+    # @property
+    # def all_even_all_odd_winning_sums(self):
+    #     return [v for v in self.winning_sums if v not in self.two_even_two_odd_winning_sums]
+    #
+    # @staticmethod
+    # def equal_even_odd(vector):
+    #     even, odd = self.count_even_odd(vector)
+    #     if even == odd:
+    #         return True
+    #     else:
+    #         return False
+

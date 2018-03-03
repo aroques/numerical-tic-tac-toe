@@ -1,7 +1,6 @@
 from Board import Board
-from random import shuffle
 from Player import Player
-from itertools import combinations
+
 
 def main():
     human_player_first = int(input('Please enter a 1 or 2 to choose to go first or second:'))
@@ -40,8 +39,6 @@ def get_max_and_min(players):
         else:
             min_ = player
     return max_, min_
-
-
 
 
 if __name__ == '__main__':

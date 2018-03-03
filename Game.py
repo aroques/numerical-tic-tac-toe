@@ -12,9 +12,6 @@ class Game:
     need to set the .initial attribute to the initial state; this can
     be done in the constructor."""
 
-    def __init__(self, board):
-        self.initial = board
-
     @staticmethod
     def actions(state):
         """Return a list of the allowable moves at this point.
@@ -58,16 +55,3 @@ class Game:
         """Print or otherwise display the state."""
         print(state)
 
-    def __repr__(self):
-        return '<{}>'.format(self.__class__.__name__)
-
-    def play_game(self, *players):
-        """Play an n-person, move-alternating game."""
-        state = self.initial
-        while True:
-            for player in players:
-                move = player(self, state)
-                state = self.result(state, move)
-                if self.terminal_test(state):
-                    self.display(state)
-                    return self.utility(state, self.to_move(self.initial))
