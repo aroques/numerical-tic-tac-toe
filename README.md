@@ -18,12 +18,9 @@ There's two ways to play:
 2. The computer plays itself, talking alternating moves, allowing a human to watch by pressing a key to continue for each successive move.
 
 ### Implementation
-This implementation uses iterative deepening search and alpha-beta pruning. The algorithm searches down the tree to a specified depth
-and a evaluation function is used to evaluate all board states at that depth. Alpha-beta pruning is used to trim branches as these
-values are propagated back up to the root node. 
+This implementation uses iterative deepening search and alpha-beta pruning. The algorithm searches down the tree to a specified depth and an evaluation function is used to evaluate all board states at that depth. Alpha-beta pruning is used to trim branches as these values are propagated back up to the root node. 
 
-The search algorithm starts at depth 0 and repeats the algorithm at increasing depths. After two seconds have been reached an exception is thrown
-and the best move from the last full depth search is used.
+The search algorithm starts at depth 0 and repeats the algorithm at increasing depths. After two seconds have been reached an exception is thrown and the best move from the last full depth search is used.
 
 ### The evaluation function
 The evaluation function splits the board into 10 vectors: 4 row, 4 column and 2 diagonal vectors. Then, it calculates
