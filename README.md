@@ -42,7 +42,7 @@ better evaluation function.
 
 
 
-#### References
+### References
 
 ***Artificial Intelligence: A Modern Approach* (AIMA)** (3rd Edition) by Stuart J. Russel and Peter Norvig
 
