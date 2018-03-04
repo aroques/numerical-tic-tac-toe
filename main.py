@@ -1,6 +1,5 @@
-from Board import Board
-from Player import Player
-from copy import deepcopy
+from numerical_tic_tac_toe import Board
+from numerical_tic_tac_toe import Player
 
 
 def main():
@@ -77,6 +76,7 @@ def create_players(human_player_first):
 
 
 def get_max_and_min(players):
+    max_ = min_ = None
     for player in players:
         if player.is_max:
             max_ = player

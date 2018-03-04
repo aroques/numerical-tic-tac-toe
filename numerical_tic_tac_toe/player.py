@@ -1,4 +1,4 @@
-from search import iterative_deepening_alphabeta
+from .search import iterative_deepening_alphabeta
 from copy import deepcopy
 
 

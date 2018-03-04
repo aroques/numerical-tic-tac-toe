@@ -2,9 +2,8 @@
 #  Adapted from https://github.com/aimacode/aima-python/blob/master/games.py
 #
 import time
-from Game import Game
+from .game import Game
 from sys import maxsize
-from copy import deepcopy
 
 infinity = float('inf')
 
@@ -16,33 +15,35 @@ class TimeoutReached(Exception):
 def evalfn(board):
     score = 0
     vectors = board.rows + board.columns + board.diagonals
+
     maxes_turn = board.is_maxes_turn
+
     for v in vectors:
 
         even, odd = board.count_even_odd(v)
 
         if even == 2 and odd == 1:
             if maxes_turn:
-                score += 3
+                score += 10
             else:
-                score -= 3
+                score -= 10
 
         if odd == 3 and even == 0:
             if maxes_turn:
-                score += 3
+                score += 10
 
         if even == 3 and odd == 0:
             if not maxes_turn:
-                score -= 3
+                score -= 10
 
         if 0 < even < 3:
-            score += 1
+            score += 3
 
         if even == 1 and maxes_turn:
-            score += 1
+            score += 3
 
         if even == 1 and odd == 1 and maxes_turn:
-            score -= 1
+            score -= 7
 
     return score
 
@@ -61,7 +62,7 @@ def iterative_deepening_alphabeta(state):
             print('Timeout reached')
             break
 
-    print('Depth: {} Best action: {} Best score: {}'.format(depth-1, best_action, best_score))
+    print('Depth: {}, Best action: {}, Best score: {}'.format(depth-1, best_action, best_score))
     return best_action
 
 

@@ -1,5 +1,4 @@
-from itertools import product, combinations
-from random import randrange
+from itertools import product
 
 
 class Board:
@@ -140,29 +139,9 @@ class Board:
     def utility(self):
         """Returns 30 if there is a winning sum else returns 0"""
         if self.has_winning_sum:
-            return 30
+            return 100
         else:
             return 0
-
-    # @property
-    # def all_odd_move_values(self):
-    #     return list(set(move[1] for move in self.all_odd_moves))
-    #
-    # @property
-    # def all_even_move_values(self):
-    #     return list(set(move[1] for move in self.all_even_moves))
-    #
-    @property
-    def winning_sums(self):
-        return [set(v) for v in combinations(self.all_numbers, self.length) if sum(v) == self.winning_sum]
-
-    @property
-    def two_even_two_odd_winning_sums(self):
-        return [v for v in self.winning_sums if self.equal_even_odd(v)]
-
-    @property
-    def all_even_all_odd_winning_sums(self):
-        return [v for v in self.winning_sums if v not in self.two_even_two_odd_winning_sums]
 
     def equal_even_odd(self, vector):
         even, odd = self.count_even_odd(vector)
