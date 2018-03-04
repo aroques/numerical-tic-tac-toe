@@ -62,7 +62,7 @@ def iterative_deepening_alphabeta(state):
             print('Timeout reached')
             break
 
-    print('Depth: {}, Best action: {}, Best score: {}'.format(depth-1, best_action, best_score))
+    print('Depth: {}, Best move: {}, Best score: {}'.format(depth-1, best_action, best_score))
     return best_action
 
 

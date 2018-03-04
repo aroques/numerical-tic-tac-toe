@@ -26,6 +26,8 @@ def main():
         if len(list(board.all_possible_moves)) == 0:
             print('Draw!')
             break
+        if not human_vs_ai:
+            input('Press enter to continue...')
 
         min_move = min_.get_move(board)
         board = min_.perform_move(*min_move, board)
@@ -36,6 +38,8 @@ def main():
         if len(list(board.all_possible_moves)) == 0:
             print('Draw!')
             break
+        if not human_vs_ai:
+            input('Press enter to continue...')
 
 
 def prompt_user_for_game_type():
