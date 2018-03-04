@@ -4,23 +4,14 @@ from Player import Player
 
 def main():
 
-    human_player_first = -1
+    human_vs_ai = prompt_user_for_game_type()
 
-    while human_player_first < 1:
-        human_player_first = input('Would you like to go first [Y/n]?:').lower()
-        if human_player_first == '' or human_player_first == 'y':
-            human_player_first = 1
-        elif human_player_first == 'n':
-            human_player_first = 2
-
-    if human_player_first == 1:
-        human_player = Player(is_human=1, is_max=1)
-        ai_player = Player(is_human=0, is_max=0)
+    if human_vs_ai:
+        human_player_first = prompt_user_for_play_order()
+        players = create_players(human_player_first)
     else:
-        human_player = Player(is_human=1, is_max=0)
-        ai_player = Player(is_human=0, is_max=1)
+        players = [Player(is_human=0, is_max=1), Player(is_human=0, is_max=0)]
 
-    players = [human_player, ai_player]
     max_, min_ = get_max_and_min(players)
     board = Board(3)
 
@@ -46,6 +37,43 @@ def main():
         if len(list(board.all_possible_moves)) == 0:
             print('Draw!')
             break
+
+
+def prompt_user_for_game_type():
+    human_vs_ai = -1
+
+    while human_vs_ai < 0:
+        human_vs_ai = input('Would you like to play against an AI [Y/n]?:').lower()
+        if human_vs_ai == '' or human_vs_ai == 'y':
+            human_vs_ai = 1
+        elif human_vs_ai == 'n':
+            human_vs_ai = 0
+
+    return human_vs_ai
+
+
+def prompt_user_for_play_order():
+    human_player_first = -1
+
+    while human_player_first < 0:
+        human_player_first = input('Would you like to go first [Y/n]?:').lower()
+        if human_player_first == '' or human_player_first == 'y':
+            human_player_first = 1
+        elif human_player_first == 'n':
+            human_player_first = 0
+
+    return human_player_first
+
+
+def create_players(human_player_first):
+    if human_player_first == 1:
+        human_player = Player(is_human=1, is_max=1)
+        ai_player = Player(is_human=0, is_max=0)
+    else:
+        human_player = Player(is_human=1, is_max=0)
+        ai_player = Player(is_human=0, is_max=1)
+
+    return [human_player, ai_player]
 
 
 def get_max_and_min(players):

@@ -50,29 +50,37 @@ def evalfn(board):
 def iterative_deepening_alphabeta(state):
     game = Game
     start_time = time.time()
-    try:
 
-        for depth in range(0, maxsize):
+    best_action = None
+    best_score = -infinity
+
+    for depth in range(0, maxsize):
+        try:
+            print('search with depth {}'.format(depth))
             best_action, best_score = alphabeta_cutoff_search(state, game, start_time, depth, eval_fn=evalfn)
+            print('best action found was {} with value {}'.format(best_action, best_score))
+        except TimeoutReached:
+            print('Timeout reached')
+            break
 
-    except TimeoutReached:
-        print('Timeout reached')
-        print('Depth: {} Best action: {} Best score: {}'.format(depth, best_action, best_score))
-        return best_action
+    print('Depth: {} Best action: {} Best score: {}'.format(depth-1, best_action, best_score))
+    return best_action
 
 
-def alphabeta_cutoff_search(state, game, start_time, d=4, reached_cutoff=None, eval_fn=None):
+def alphabeta_cutoff_search(state, game, start_time, d, reached_cutoff=None, eval_fn=None):
     """Search game to determine best action; use alpha-beta pruning.
     This version cuts off search and uses an evaluation function."""
-    TIMEOUT = 4
+    TIMEOUT = 2  # seconds
 
     player = game.to_move(state)  # will return 'MAX' or 'MIN'
 
     def max_value(state, alpha, beta, depth):
-        if reached_cutoff(state, depth):
+        if game.is_terminal(state):
+            return game.utility(state, player)
+        elif reached_cutoff(state, depth):
             return eval_fn(state)
-        elif time.time() - start_time >= TIMEOUT:
-            raise TimeoutReached('Two seconds have passed')
+        elif (time.time() - start_time) >= TIMEOUT:
+            raise TimeoutReached('Timeout reached')
         v = -infinity
         for a in game.actions(state):
             v = max(v, min_value(game.result(state, a),
@@ -83,10 +91,12 @@ def alphabeta_cutoff_search(state, game, start_time, d=4, reached_cutoff=None, e
         return v
 
     def min_value(state, alpha, beta, depth):
-        if reached_cutoff(state, depth):
+        if game.is_terminal(state):
+            return game.utility(state, player)
+        elif reached_cutoff(state, depth):
             return eval_fn(state)
-        elif time.time() - start_time >= TIMEOUT:
-            raise TimeoutReached('Two seconds have passed')
+        elif (time.time() - start_time) >= TIMEOUT:
+            raise TimeoutReached('Timeout reached')
         v = infinity
         for a in game.actions(state):
             v = min(v, max_value(game.result(state, a),
@@ -103,9 +113,12 @@ def alphabeta_cutoff_search(state, game, start_time, d=4, reached_cutoff=None, e
     best_score = -infinity
     beta = infinity
     best_action = None
+
     for a in game.actions(state):
         v = min_value(game.result(state, a), best_score, beta, 1)
         if v > best_score:
+            print('setting best score and best action')
             best_score = v
             best_action = a
+
     return best_action, best_score

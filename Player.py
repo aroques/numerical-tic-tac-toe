@@ -1,4 +1,5 @@
 from search import iterative_deepening_alphabeta
+from copy import deepcopy
 
 
 class Player:
@@ -26,8 +27,9 @@ class Player:
 
     @staticmethod
     def perform_move(move_location, move_value, board):
-        board.board[move_location] = move_value
-        return board
+        b = deepcopy(board)
+        b.board[move_location] = move_value
+        return b
 
     def get_move(self, board):
         if self.is_human:

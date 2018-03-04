@@ -26,6 +26,8 @@ class Game:
     @staticmethod
     def result(state, move):
         """Return the state that results from making a move from a state."""
+        if move is None:
+            print('empty move')
         location, value = move[0], move[1]
         board = deepcopy(state)
         board.board[location] = value
