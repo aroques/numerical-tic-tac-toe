@@ -1,4 +1,4 @@
-from random import choice
+from search import iterative_deepening_alphabeta
 
 
 class Player:
@@ -33,8 +33,8 @@ class Player:
         if self.is_human:
             return self.get_move_from_user(board)
         else:
-            # Call alpha beta cutoff search here
-            return choice(self.all_legal_moves(board))
+            move = iterative_deepening_alphabeta(board)
+            return move
 
     def get_move_from_user(self, board):
         while True:

@@ -1,6 +1,7 @@
 #
 #  Adapted from https://github.com/aimacode/aima-python/blob/master/games.py
 #
+from copy import deepcopy
 
 
 class Game:
@@ -26,8 +27,9 @@ class Game:
     def result(state, move):
         """Return the state that results from making a move from a state."""
         location, value = move[0], move[1]
-        state.board[location] = value
-        return state
+        board = deepcopy(state)
+        board.board[location] = value
+        return board
 
     @staticmethod
     def utility(state, player):
@@ -35,7 +37,7 @@ class Game:
         if player == 'MAX':
             return state.utility
         else:
-            return -state.utiility
+            return -state.utility
 
     @staticmethod
     def is_terminal(state):

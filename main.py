@@ -14,7 +14,9 @@ def main():
 
     players = [human_player, ai_player]
     max_, min_ = get_max_and_min(players)
-    board = Board(4)
+    board = Board(3)
+
+    print(board)
 
     while True:
         max_move = max_.get_move(board)

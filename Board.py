@@ -1,4 +1,5 @@
 from itertools import product, combinations
+from random import randrange
 
 
 class Board:
@@ -50,14 +51,16 @@ class Board:
     @property
     def row_has_winning_sum(self):
         for row in self.rows:
-            if sum(row) == self.winning_sum:
+            row = [val for val in row if val != 0]
+            if sum(row) == self.winning_sum and len(row) == self.length:
                 return True
         return False
 
     @property
     def column_has_winning_sum(self):
         for column in self.columns:
-            if sum(column) == self.winning_sum:
+            column = [val for val in column if val != 0]
+            if sum(column) == self.winning_sum and len(column) == self.length:
                 return True
         return False
 
@@ -78,7 +81,8 @@ class Board:
     @property
     def diagonal_has_winning_sum(self):
         for diagonal in self.diagonals:
-            if sum(diagonal) == self.winning_sum:
+            diagonal = [val for val in diagonal if val != 0]
+            if sum(diagonal) == self.winning_sum and len(diagonal) == 3:
                 return True
         return False
 
@@ -136,7 +140,7 @@ class Board:
     def utility(self):
         """Returns 1 if there is a winning sum else returns 0"""
         if self.has_winning_sum:
-            return 1
+            return 10
         else:
             return 0
 
