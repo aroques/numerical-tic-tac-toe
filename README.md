@@ -1,6 +1,8 @@
-# 4 x 4 Numerical Tic-tac-toe
+# Numerical Tic-tac-toe
 
-Numerical tic-tac-toe is similar to normal tic-tac-toe, except instead of X's and O's, the two players are given the numbers:
+A 4x4 numerical tic-tac-toe game written in python 3. 
+
+Numerical tic-tac-toe is similar to normal tic-tac-toe, except instead of X's and O's the two players are given the numbers:
 
 - {1, 3, 5, 7, 9, 11, 13, 15}
 - {2, 4, 6, 8, 10, 12, 14, 16}
