@@ -44,7 +44,13 @@ class Game:
     @staticmethod
     def is_terminal(state):
         """Return True if this is a final state for the game."""
-        return state.has_winning_sum
+        num_moves = 0
+        if state.is_maxes_turn:
+            num_moves = len(state.all_odd_moves)
+        else:
+            num_moves = len(state.all_even_moves)
+
+        return state.has_winning_sum or num_moves == 0
 
     @staticmethod
     def to_move(state):

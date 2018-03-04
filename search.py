@@ -56,9 +56,7 @@ def iterative_deepening_alphabeta(state):
 
     for depth in range(0, maxsize):
         try:
-            print('search with depth {}'.format(depth))
             best_action, best_score = alphabeta_cutoff_search(state, game, start_time, depth, eval_fn=evalfn)
-            print('best action found was {} with value {}'.format(best_action, best_score))
         except TimeoutReached:
             print('Timeout reached')
             break
@@ -75,12 +73,13 @@ def alphabeta_cutoff_search(state, game, start_time, d, reached_cutoff=None, eva
     player = game.to_move(state)  # will return 'MAX' or 'MIN'
 
     def max_value(state, alpha, beta, depth):
+        if (time.time() - start_time) >= TIMEOUT:
+            raise TimeoutReached('Timeout reached')
         if game.is_terminal(state):
             return game.utility(state, player)
-        elif reached_cutoff(state, depth):
+        elif reached_cutoff(depth):
             return eval_fn(state)
-        elif (time.time() - start_time) >= TIMEOUT:
-            raise TimeoutReached('Timeout reached')
+
         v = -infinity
         for a in game.actions(state):
             v = max(v, min_value(game.result(state, a),
@@ -91,12 +90,13 @@ def alphabeta_cutoff_search(state, game, start_time, d, reached_cutoff=None, eva
         return v
 
     def min_value(state, alpha, beta, depth):
+        if (time.time() - start_time) >= TIMEOUT:
+            raise TimeoutReached('Timeout reached')
         if game.is_terminal(state):
             return game.utility(state, player)
-        elif reached_cutoff(state, depth):
+        elif reached_cutoff(depth):
             return eval_fn(state)
-        elif (time.time() - start_time) >= TIMEOUT:
-            raise TimeoutReached('Timeout reached')
+
         v = infinity
         for a in game.actions(state):
             v = min(v, max_value(game.result(state, a),
@@ -107,17 +107,14 @@ def alphabeta_cutoff_search(state, game, start_time, d, reached_cutoff=None, eva
         return v
 
     reached_cutoff = (reached_cutoff or
-                      (lambda state, depth: depth > d or
-                       game.is_terminal(state)))
+                      (lambda depth: depth > d))
     eval_fn = eval_fn or (lambda state: game.utility(state, player))
     best_score = -infinity
     beta = infinity
     best_action = None
-
     for a in game.actions(state):
         v = min_value(game.result(state, a), best_score, beta, 1)
         if v > best_score:
-            print('setting best score and best action')
             best_score = v
             best_action = a
 

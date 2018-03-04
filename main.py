@@ -1,9 +1,9 @@
 from Board import Board
 from Player import Player
+from copy import deepcopy
 
 
 def main():
-
     human_vs_ai = prompt_user_for_game_type()
 
     if human_vs_ai:
@@ -13,7 +13,7 @@ def main():
         players = [Player(is_human=0, is_max=1), Player(is_human=0, is_max=0)]
 
     max_, min_ = get_max_and_min(players)
-    board = Board(3)
+    board = Board(4)
 
     print(board)
 
