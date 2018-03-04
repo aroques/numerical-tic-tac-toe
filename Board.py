@@ -138,9 +138,9 @@ class Board:
 
     @property
     def utility(self):
-        """Returns 1 if there is a winning sum else returns 0"""
+        """Returns 30 if there is a winning sum else returns 0"""
         if self.has_winning_sum:
-            return 10
+            return 30
         else:
             return 0
 
@@ -152,22 +152,21 @@ class Board:
     # def all_even_move_values(self):
     #     return list(set(move[1] for move in self.all_even_moves))
     #
-    # @property
-    # def winning_sums(self):
-    #     return [v for v in combinations(self.all_numbers, self.length) if sum(v) == self.winning_sum]
-    #
-    # @property
-    # def two_even_two_odd_winning_sums(self):
-    #     return [v for v in self.winning_sums if equal_even_odd(v)]
-    #
-    # @property
-    # def all_even_all_odd_winning_sums(self):
-    #     return [v for v in self.winning_sums if v not in self.two_even_two_odd_winning_sums]
-    #
-    # @staticmethod
-    # def equal_even_odd(vector):
-    #     even, odd = self.count_even_odd(vector)
-    #     if even == odd:
-    #         return True
-    #     else:
-    #         return False
+    @property
+    def winning_sums(self):
+        return [set(v) for v in combinations(self.all_numbers, self.length) if sum(v) == self.winning_sum]
+
+    @property
+    def two_even_two_odd_winning_sums(self):
+        return [v for v in self.winning_sums if self.equal_even_odd(v)]
+
+    @property
+    def all_even_all_odd_winning_sums(self):
+        return [v for v in self.winning_sums if v not in self.two_even_two_odd_winning_sums]
+
+    def equal_even_odd(self, vector):
+        even, odd = self.count_even_odd(vector)
+        if even == odd:
+            return True
+        else:
+            return False

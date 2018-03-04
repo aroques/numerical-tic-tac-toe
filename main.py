@@ -3,7 +3,15 @@ from Player import Player
 
 
 def main():
-    human_player_first = int(input('Please enter a 1 or 2 to choose to go first or second:'))
+
+    human_player_first = -1
+
+    while human_player_first < 1:
+        human_player_first = input('Would you like to go first [Y/n]?:').lower()
+        if human_player_first == '' or human_player_first == 'y':
+            human_player_first = 1
+        elif human_player_first == 'n':
+            human_player_first = 2
 
     if human_player_first == 1:
         human_player = Player(is_human=1, is_max=1)

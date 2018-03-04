@@ -38,17 +38,24 @@ class Player:
 
     def get_move_from_user(self, board):
         while True:
-            move_location = int(input('Enter move location {}: '.format(self.all_legal_move_locations(board))))
-            if move_location not in self.all_legal_move_locations(board):
+            try:
+                move_location = int(input('Enter move location {}: '.format(self.all_legal_move_locations(board))))
+                if move_location not in self.all_legal_move_locations(board):
+                    print('Not a valid move location')
+                else:
+                    break
+            except ValueError:
                 print('Not a valid move location')
-            else:
-                break
+
         while True:
-            move_value = int(input('Enter move value {}: '.format(self.all_legal_move_values(board))))
-            if move_value not in self.all_legal_move_values(board):
-                print('Not a valid move value')
-            else:
-                break
+            try:
+                move_value = int(input('Enter move value {}: '.format(self.all_legal_move_values(board))))
+                if move_value not in self.all_legal_move_values(board):
+                    print('Not a valid move value')
+                else:
+                    break
+            except ValueError:
+                print('Not a valid move location')
 
         return move_location, move_value
 
